@@ -1,0 +1,6 @@
+Include/
+Lib/
+__pycache__/
+Scripts/
+pip-selfcheck.json
+pyvenv.cfg
