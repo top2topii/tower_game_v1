@@ -36,8 +36,26 @@ def pygame_mainloop():
     x_move = 0
     y_move = 0
 
-    a_triangle = enemy.Enemy(myscreen, RED, BLOCK_SIZE, 42, 1)
+    # a_triangle = enemy.Enemy(myscreen, RED, BLOCK_SIZE, 64, 42, 1)
+    # b_triangle = enemy.Enemy(myscreen, GREEN, BLOCK_SIZE, 32, 42, 1)
 
+    my_enemy_manager = enemy.EnemyManager(myscreen, BLOCK_SIZE)
+
+    # my_enemy_manager.add_enemy(RED, 0, 42, 1)
+    # my_enemy_manager.add_enemy(GREEN, 32, 42, 1)
+
+    for i in range(10):
+        if i % 2 == 1:
+            color = RED
+        else:
+            color = GREEN
+
+        my_enemy_manager.add_enemy(color, i * BLOCK_SIZE , 42, 1)
+        #my_enemy_manager.add_enemy(GREEN, i * BLOCK_SIZE, 42, 1)
+
+
+
+    count = 0
     while not isFinish:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -60,7 +78,11 @@ def pygame_mainloop():
 
         #
 
-        a_triangle.draw()
+
+        # a_triangle.draw(count)
+        # b_triangle.draw(count)
+        my_enemy_manager.draw(count)
+        count += 1
 
         pygame.draw.polygon(myscreen, GREEN, [[15 + x_move, 5 + y_move], [5 + x_move, 24 + y_move], [25 + x_move, 24 + y_move]], 1)
 
