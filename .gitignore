@@ -2,5 +2,7 @@ Include/
 Lib/
 __pycache__/
 Scripts/
+.idea/
+venv3/
 pip-selfcheck.json
 pyvenv.cfg

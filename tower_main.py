@@ -45,14 +45,12 @@ def pygame_mainloop():
     # my_enemy_manager.add_enemy(GREEN, 32, 42, 1)
 
     for i in range(10):
-        if i % 2 == 1:
-            color = RED
-        else:
-            color = GREEN
 
-        my_enemy_manager.add_enemy(color, i * BLOCK_SIZE , 42, 1)
-        #my_enemy_manager.add_enemy(GREEN, i * BLOCK_SIZE, 42, 1)
+        color = GREEN
+        my_enemy_manager.add_enemy(color, i * BLOCK_SIZE , 42, 1, 0)
 
+        color = RED
+        my_enemy_manager.add_enemy(color, i * BLOCK_SIZE, 74, 1, 1)
 
 
     count = 0
