@@ -166,13 +166,13 @@ class EnemyManager(object):
         self._screen = screen
         self._block_size = block_size
 
-    def add_enemy(self, color, start_position, init_x=0, init_y=0, waypoint_id=0):
+    def add_enemy(self, color, start_timeframe, init_x=0, init_y=0, waypoint_id=0):
 
         # Waypoint 객체가 없으면 생성해서 등록한다.
         if not waypoint_id in self._waypoint_dic:
             self._waypoint_dic[waypoint_id] = Waypoint(self._block_size, init_x, init_y, waypoint_id)
 
-        self._enemy_list.append(Enemy(self._screen, color, self._block_size, start_position, self._waypoint_dic[waypoint_id], init_x, init_y))
+        self._enemy_list.append(Enemy(self._screen, color, self._block_size, start_timeframe, self._waypoint_dic[waypoint_id], init_x, init_y))
 
     def draw(self, count):
 
@@ -187,28 +187,35 @@ class Enemy(object):
     # _x_move = 0
     # _y_move = 0
     # _position = 0       # 현재 path중 몇번째 위치인지를 표시
-    # _start_position = None
+    # _start_timeframe = None
 
-    def __init__(self, screen, color, block_size, start_position, waypoint_obj, init_x=0, init_y=0):
+    def __init__(self, screen, color, block_size, start_timeframe, waypoint_obj, init_x=0, init_y=0):
 
         self._waypoint = waypoint_obj
 
         self._screen = screen
         self._color = color
-        self._speed = 0.0
+        self._speed = 2.0   # 0.0 ~ 9.0
         self._block_size = block_size
 
-        self._start_position = start_position
+        self._start_timeframe = start_timeframe
+        self._adjust_start = start_timeframe / (1 + self._speed)    # 속도의 증가를 반영하여 출현을 결정한다.
         self._x = init_x
         self._y = init_y
         self._x_move = 0
         self._y_move = 0
         self._position = 0
 
+        self._view = False      # 처음에는 보이지 않는다.
+
     def draw(self, count):
 
-        if count > self._start_position:
-            self._position += 1
+        if not self._view:
+            if count > self._adjust_start:  # 속도의 증가를 반영하여 출현을 결정한다.
+                self._view = True
+
+        else:
+            self._position += (1 + self._speed)
 
             (self._x_move, self._y_move) = self._waypoint.position_to_xy(self._position)
 
